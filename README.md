@@ -1,7 +1,8 @@
 python-doctl
 ============
 
-A Python wrapper for the excellent [doctl](https://github.com/digitalocean/doctl) command-line utility, from [DigitalOcean](https://digitalocean.com).
+A Python wrapper for the excellent [doctl](https://github.com/digitalocean/doctl)
+command-line utility, from [DigitalOcean](https://digitalocean.com).
 
 Usage
 -----
@@ -21,13 +22,7 @@ Usage
     thoth
     macbook
 
-All methods return Python data structures, includinging timezone–aware Datetime objects.
-
-Notes
------
-
-Use of the `DIGITALOCEAN_ACCESS_TOKEN` environment variable is recommended.
-
+All methods return Python data structures, including timezone–aware `Datetime` objects.
 
 Available Namespaces
 --------------------
@@ -55,6 +50,11 @@ namespaces are available for your use and enjoyment:
 - `compute.volume`
 - `compute.volume_action`
 
+Notes
+-----
+
+Use of the `DIGITALOCEAN_ACCESS_TOKEN` environment variable for authentication
+is recommended.
 
 Installation
 ------------

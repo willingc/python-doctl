@@ -11,10 +11,10 @@ import delegator
 import maya
 
 
-try:
-    os.makedirs(BIN_CACHE)
-except FileExistsError:
-    pass
+# try:
+#     # os.makedirs(BIN_CACHE)
+# except FileExistsError:
+#     pass
 
 
 class DOCtlError(RuntimeError):

@@ -3,31 +3,60 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. python-doctl-docs:
+
 python-doctl
 ============
 
-A Python wrapper for the excellent `doctl <https://github.com/digitalocean/doctl>`_ command-line utility, from
-`Digital Ocean <https://digitalocean.com>`_.
+`python-doctl`_, or more simply Python library ``doctl``, is a Python wrapper for the
+excellent `doctl CLI <https://github.com/digitalocean/doctl>`_
+command-line utility, from `Digital Ocean <https://digitalocean.com>`_.
 
------------------------
+----
 
-This documentation exists to guide you through the usage of the `doctl <https://pypi.org/project/doctl/>`_ Python library — a Pythonic wrapper around the ``doctl`` command–line utility, for managing your `DigitalOcean <https://digitalocean.com/>`_ infrastructure.
+This documentation exists to guide you through the usage of the library,
+``doctl``, which is a Pythonic wrapper around the `doctl CLI`_ command-line
+utility, for managing your `DigitalOcean <https://digitalocean.com/>`_ 
+infrastructure.
 
 Please enjoy!
+
+
+.. _installation:
 
 Installation
 ------------
 
-Fist, ensure you have ``doctl`` installed on your system, then you can add ``python-doctl`` to your project with `Pipenv <https://pipenv.org/>`_::
+.. note:: **Python prerequisites**
+
+   - ``python-doctl`` requires a recent Python 3 version.
+   - Install `Pipenv` for package management using the `Pipenv documentation`_.
+
+First, ensure you have the `doctl CLI`_ command-line utility installed on your
+system.
+
+Then you can add ``python-doctl`` to your project with
+`Pipenv <https://pipenv.org/>`_::
 
     $ pipenv install doctl
 
-Introduction
-------------
 
-The ``DIGITALOCEAN_ACCESS_TOKEN`` environment variable will automatically be honored.
+.. _python-doctl: https://pypi.org/project/doctl/
+.. _doctl CLI: https://github.com/digitalocean/doctl
+.. _Pipenv documentation: https://pipenv.readthedocs.io/en/latest/#install-pipenv-today
 
+
+.. _usage:
+
+Usage
+-----
+
+The ``DIGITALOCEAN_ACCESS_TOKEN`` environment variable will automatically be
+honored::
+
+    $ pipenv shell
     $ export DIGITALOCEAN_ACCESS_TOKEN=xxxx
+    $ python
 
     >>> import doctl
 
@@ -44,21 +73,27 @@ The ``DIGITALOCEAN_ACCESS_TOKEN`` environment variable will automatically be hon
     thoth
     macbook
 
-Alternatively, you can pass a token in explicitly:
+Alternatively, you can pass a token in explicitly::
 
     >>> from doctl import DigitalOcean
     >>> doctl = DigitalOcean(token="xxxxx")
 
+Notes
++++++
+
+Use of the ``DIGITALOCEAN_ACCESS_TOKEN`` environment variable is recommended.
+
 Things to Know
 ++++++++++++++
 
-- All reasonable ``doctl`` commands are available as methods on within the ``doctl`` module. Sub–commands are referenced with another method call (e.g. ``doctl.compute.ssh_key.list()``.
-- All methods return Python data structures, includinging timezone–aware Datetime objects.
+- All reasonable ``doctl`` commands are available as methods within the
+  ``doctl`` module. Sub–commands are referenced with another method call
+  (e.g. ``doctl.compute.ssh_key.list()``.
+- All methods return Python data structures, including timezone–aware 
+  ``Datetime`` objects.
 
-Notes
------
 
-Use of the ``DIGITALOCEAN_ACCESS_TOKEN`` environment variable is recommended.
+.. _namespaces:
 
 Available Namespaces
 --------------------
@@ -86,24 +121,34 @@ namespaces are available for your use and enjoyment:
 - ``compute.volume``
 - ``compute.volume_action``
 
+
+.. _API-docs:
+
 API Documentation
 =================
+
+.. _main-interfaces:
 
 Main Interfaces
 ---------------
 
-.. module:: doctl
 
-The ``Compute`` class is the main interface to ``doctl``. A built in instance, ``doctl.compute`` is available at the module–level.
+The ``Compute`` class is the main interface to ``doctl``. A built in instance,
+``doctl.compute`` is available at the module–level.
 
 
-.. autoclass:: Compute
-    :members:
+.. autoclass:: doctl.Compute
+   :members:
 
-This is also an `Account` class, for viewing your authentication information, as well as your rate–limiting. A built in instance, ``doctl.account`` is available at the module–level.
+This is also an `Account` class, for viewing your authentication information,
+as well as your rate-limiting. A built in instance, ``doctl.account`` is
+available at the module-level.
 
 .. autoclass:: Account
     :members:
+
+
+.. _low-level:
 
 Low–Level Classes
 -----------------
@@ -112,8 +157,12 @@ Low–Level Classes
     :members:
 
 
+.. _compute:
+
 Compute Classes
 ---------------
+
+.. currentmodule:: Compute
 
 .. autoclass:: ComputeAction
     :members:
@@ -172,3 +221,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+

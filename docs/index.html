@@ -33,61 +33,79 @@
             
   <div class="section" id="python-doctl">
 <h1>python-doctl<a class="headerlink" href="#python-doctl" title="Permalink to this headline">¶</a></h1>
-<p>A Python wrapper for the excellent <a class="reference external" href="https://github.com/digitalocean/doctl">doctl</a> command-line utility, from
-<a class="reference external" href="https://digitalocean.com">Digital Ocean</a>.</p>
+<p><a class="reference external" href="https://pypi.org/project/doctl/">python-doctl</a>, or more simply Python library <code class="docutils literal notranslate"><span class="pre">doctl</span></code>, is a Python wrapper for the
+excellent <a class="reference external" href="https://github.com/digitalocean/doctl">doctl CLI</a>
+command-line utility, from <a class="reference external" href="https://digitalocean.com">Digital Ocean</a>.</p>
 <hr class="docutils" />
-<p>This documentation exists to guide you through the usage of the <a class="reference external" href="https://pypi.org/project/doctl/">doctl</a> Python library — a Pythonic wrapper around the <code class="docutils literal notranslate"><span class="pre">doctl</span></code> command–line utility, for managing your <a class="reference external" href="https://digitalocean.com/">DigitalOcean</a> infrastructure.</p>
+<p>This documentation exists to guide you through the usage of the library,
+<code class="docutils literal notranslate"><span class="pre">doctl</span></code>, which is a Pythonic wrapper around the <a class="reference external" href="https://github.com/digitalocean/doctl">doctl CLI</a> command-line
+utility, for managing your <a class="reference external" href="https://digitalocean.com/">DigitalOcean</a>
+infrastructure.</p>
 <p>Please enjoy!</p>
 <div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>Fist, ensure you have <code class="docutils literal notranslate"><span class="pre">doctl</span></code> installed on your system, then you can add <code class="docutils literal notranslate"><span class="pre">python-doctl</span></code> to your project with <a class="reference external" href="https://pipenv.org/">Pipenv</a>:</p>
+<span id="id1"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Python prerequisites</strong></p>
+<ul class="last simple">
+<li><code class="docutils literal notranslate"><span class="pre">python-doctl</span></code> requires a recent Python 3 version.</li>
+<li>Install <cite>Pipenv</cite> for package management using the <a class="reference external" href="https://pipenv.readthedocs.io/en/latest/#install-pipenv-today">Pipenv documentation</a>.</li>
+</ul>
+</div>
+<p>First, ensure you have the <a class="reference external" href="https://github.com/digitalocean/doctl">doctl CLI</a> command-line utility installed on your
+system.</p>
+<p>Then you can add <code class="docutils literal notranslate"><span class="pre">python-doctl</span></code> to your project with
+<a class="reference external" href="https://pipenv.org/">Pipenv</a>:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pipenv install doctl
 </pre></div>
 </div>
 </div>
-<div class="section" id="introduction">
-<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">DIGITALOCEAN_ACCESS_TOKEN</span></code> environment variable will automatically be honored.</p>
-<blockquote>
-<div><p>$ export DIGITALOCEAN_ACCESS_TOKEN=xxxx</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">doctl</span>
+<div class="section" id="usage">
+<span id="id4"></span><h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">DIGITALOCEAN_ACCESS_TOKEN</span></code> environment variable will automatically be
+honored:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pipenv shell
+$ export DIGITALOCEAN_ACCESS_TOKEN=xxxx
+$ python
+
+&gt;&gt;&gt; import doctl
+
+&gt;&gt;&gt; for droplet in doctl.compute.droplet.list():
+...     print(droplet[&#39;name&#39;])
+pypi.kennethreitz.org
+code.kennethreitz.org
+build.kennethreitz.org
+…
+
+&gt;&gt;&gt; for key in doctl.compute.ssh_key.list():
+...     print(key[&#39;name&#39;])
+Blink (iPad)
+thoth
+macbook
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">droplet</span> <span class="ow">in</span> <span class="n">doctl</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">droplet</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">droplet</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-<span class="go">pypi.kennethreitz.org</span>
-<span class="go">code.kennethreitz.org</span>
-<span class="go">build.kennethreitz.org</span>
-<span class="go">…</span>
-</pre></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">doctl</span><span class="o">.</span><span class="n">compute</span><span class="o">.</span><span class="n">ssh_key</span><span class="o">.</span><span class="n">list</span><span class="p">():</span>
-<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">])</span>
-<span class="go">Blink (iPad)</span>
-<span class="go">thoth</span>
-<span class="go">macbook</span>
-</pre></div>
-</div>
-</div></blockquote>
 <p>Alternatively, you can pass a token in explicitly:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">doctl</span> <span class="k">import</span> <span class="n">DigitalOcean</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">doctl</span> <span class="o">=</span> <span class="n">DigitalOcean</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="s2">&quot;xxxxx&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
+<div class="section" id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<p>Use of the <code class="docutils literal notranslate"><span class="pre">DIGITALOCEAN_ACCESS_TOKEN</span></code> environment variable is recommended.</p>
+</div>
 <div class="section" id="things-to-know">
 <h3>Things to Know<a class="headerlink" href="#things-to-know" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
-<li>All reasonable <code class="docutils literal notranslate"><span class="pre">doctl</span></code> commands are available as methods on within the <code class="docutils literal notranslate"><span class="pre">doctl</span></code> module. Sub–commands are referenced with another method call (e.g. <code class="docutils literal notranslate"><span class="pre">doctl.compute.ssh_key.list()</span></code>.</li>
-<li>All methods return Python data structures, includinging timezone–aware Datetime objects.</li>
+<li>All reasonable <code class="docutils literal notranslate"><span class="pre">doctl</span></code> commands are available as methods within the
+<code class="docutils literal notranslate"><span class="pre">doctl</span></code> module. Sub–commands are referenced with another method call
+(e.g. <code class="docutils literal notranslate"><span class="pre">doctl.compute.ssh_key.list()</span></code>.</li>
+<li>All methods return Python data structures, including timezone–aware
+<code class="docutils literal notranslate"><span class="pre">Datetime</span></code> objects.</li>
 </ul>
 </div>
 </div>
-<div class="section" id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h2>
-<p>Use of the <code class="docutils literal notranslate"><span class="pre">DIGITALOCEAN_ACCESS_TOKEN</span></code> environment variable is recommended.</p>
-</div>
 <div class="section" id="available-namespaces">
-<h2>Available Namespaces<a class="headerlink" href="#available-namespaces" title="Permalink to this headline">¶</a></h2>
+<span id="namespaces"></span><h2>Available Namespaces<a class="headerlink" href="#available-namespaces" title="Permalink to this headline">¶</a></h2>
 <p>The entire API surface of <code class="docutils literal notranslate"><span class="pre">doctl</span></code> is covered by this library, so the following
 namespaces are available for your use and enjoyment:</p>
 <ul class="simple">
@@ -114,17 +132,20 @@ namespaces are available for your use and enjoyment:</p>
 </div>
 </div>
 <div class="section" id="api-documentation">
-<h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="module-doctl">
-<span id="main-interfaces"></span><h2>Main Interfaces<a class="headerlink" href="#module-doctl" title="Permalink to this headline">¶</a></h2>
-<p>The <code class="docutils literal notranslate"><span class="pre">Compute</span></code> class is the main interface to <code class="docutils literal notranslate"><span class="pre">doctl</span></code>. A built in instance, <code class="docutils literal notranslate"><span class="pre">doctl.compute</span></code> is available at the module–level.</p>
-<p>This is also an <cite>Account</cite> class, for viewing your authentication information, as well as your rate–limiting. A built in instance, <code class="docutils literal notranslate"><span class="pre">doctl.account</span></code> is available at the module–level.</p>
+<span id="api-docs"></span><h1>API Documentation<a class="headerlink" href="#api-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="main-interfaces">
+<span id="id5"></span><h2>Main Interfaces<a class="headerlink" href="#main-interfaces" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">Compute</span></code> class is the main interface to <code class="docutils literal notranslate"><span class="pre">doctl</span></code>. A built in instance,
+<code class="docutils literal notranslate"><span class="pre">doctl.compute</span></code> is available at the module–level.</p>
+<p>This is also an <cite>Account</cite> class, for viewing your authentication information,
+as well as your rate-limiting. A built in instance, <code class="docutils literal notranslate"><span class="pre">doctl.account</span></code> is
+available at the module-level.</p>
 </div>
 <div class="section" id="lowlevel-classes">
-<h2>Low–Level Classes<a class="headerlink" href="#lowlevel-classes" title="Permalink to this headline">¶</a></h2>
+<span id="low-level"></span><h2>Low–Level Classes<a class="headerlink" href="#lowlevel-classes" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="compute-classes">
-<h2>Compute Classes<a class="headerlink" href="#compute-classes" title="Permalink to this headline">¶</a></h2>
+<span id="compute"></span><h2>Compute Classes<a class="headerlink" href="#compute-classes" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
@@ -143,26 +164,17 @@ namespaces are available for your use and enjoyment:</p>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="#">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">python-doctl</a><ul>
-<li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#introduction">Introduction</a><ul>
-<li><a class="reference internal" href="#things-to-know">Things to Know</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#notes">Notes</a></li>
-<li><a class="reference internal" href="#available-namespaces">Available Namespaces</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#api-documentation">API Documentation</a><ul>
-<li><a class="reference internal" href="#module-doctl">Main Interfaces</a></li>
-<li><a class="reference internal" href="#lowlevel-classes">Low–Level Classes</a></li>
-<li><a class="reference internal" href="#compute-classes">Compute Classes</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-</ul>
+<h1 class="logo"><a href="#">python-doctl</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
@@ -170,13 +182,6 @@ namespaces are available for your use and enjoyment:</p>
   </ul></li>
 </ul>
 </div>
-  <div role="note" aria-label="source link">
-    <h3>This Page</h3>
-    <ul class="this-page-menu">
-      <li><a href="_sources/index.rst.txt"
-            rel="nofollow">Show Source</a></li>
-    </ul>
-   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -197,7 +202,7 @@ namespaces are available for your use and enjoyment:</p>
       &copy;2018, Kenneth Reitz.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.5</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.9</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
